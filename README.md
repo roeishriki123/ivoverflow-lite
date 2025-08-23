@@ -32,10 +32,8 @@ cd client
 npm install
 npm run dev
 
-Deployment
+Notes
 
-Backend: Render / Heroku
+Requires MongoDB connection string in .env
 
-Frontend: Vercel / Netlify
-
-Database: MongoDB Atlas
+Tested locally with Postman for authentication, questions, and answers
