@@ -4,10 +4,10 @@ import { createAnswer, getAnswersForQuestion } from "../controllers/answerContro
 
 const router = Router();
 
-// POST /api/answer   – יצירת תשובה לשאלה
+// POST /api/answer   
 router.post("/answer", createAnswer);
 
-// GET  /api/answers/:questionId – רשימת תשובות לשאלה
+// GET  /api/answers/:questionId 
 router.get("/answers/:questionId", getAnswersForQuestion);
 
 export default router;

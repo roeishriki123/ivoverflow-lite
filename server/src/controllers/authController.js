@@ -11,7 +11,7 @@ export async function login(req, res) {
 
     const user = await User.findOne({ email }).lean();
     if (!user) {
-      // בכוונה לא לחשוף האם המייל קיים
+      // we dont reaveal if the user exist
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
@@ -24,7 +24,7 @@ export async function login(req, res) {
     const token = jwt.sign(
       {},
       process.env.JWT_SECRET,
-      { expiresIn, subject: String(user._id) } // sub = user id
+      { expiresIn, subject: String(user._id) } 
     );
 
     return res.json({

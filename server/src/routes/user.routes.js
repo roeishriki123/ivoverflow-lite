@@ -3,7 +3,7 @@ import { verifyToken } from "../middleware/auth.js";
 
 const router = Router();
 
-// GET /api/userInfo (מוגן)
+// GET /api/userInfo (JWT verified)
 router.get("/userInfo", verifyToken, async (req, res) => {
   try {
     res.json({

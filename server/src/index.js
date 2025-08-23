@@ -31,22 +31,23 @@ app.use(cors({
 
 app.use(helmet());
 
-// ציבורי:
+// public :
 app.get("/", (req, res) => res.send("IVOverflow Lite API is running 🚀"));
 app.get("/api/health", (req, res) => res.json({ ok: true, uptime: process.uptime() }));
 app.use("/api", authRoutes); 
 
-// ↓ מכאן כל ה־/api מחייבים JWT
+// JWT
 app.use("/api", verifyToken);
 
+// what comes after is JWT verified 
 
-app.use("/api", userRoutes); // GET  /api/userInfo (מוגן)
+app.use("/api", userRoutes); 
 app.use("/api", questionRoutes);
 app.use("/api", answersRouter);
 
 
 
-// חיבור למסד נתונים והרצת השרת
+// Connecting to the database and running the server
 const PORT = process.env.PORT || 4000;
 const MONGO_URI =
   process.env.MONGO_URI || "mongodb://127.0.0.1:27017/ivoverflow";
@@ -54,19 +55,18 @@ const MONGO_URI =
 mongoose
   .connect(MONGO_URI)
   .then(() => {
-    console.log("✅ Connected to MongoDB");
+    console.log(" Connected to MongoDB");
     app.listen(PORT, () =>
-      console.log(`🚀 Server running on http://localhost:${PORT}`)
+      console.log(` Server running on http://localhost:${PORT}`)
     );
   })
   .catch((err) => {
-    console.error("❌ MongoDB connection error:", err);
+    console.error(" MongoDB connection error:", err);
     process.exit(1);
   });
 
-// כיבוי נקי (אופציונלי)
 process.on("SIGINT", async () => {
   await mongoose.connection.close();
-  console.log("🛑 Mongo connection closed");
+  console.log(" Mongo connection closed");
   process.exit(0);
 });

@@ -14,7 +14,7 @@ router.post("/login", async (req, res) => {
     const user = await User.findOne({ email });
     if (!user) return res.status(401).json({ error: "Invalid credentials" });
 
-    // השוואה מול SHA-512 hex
+    // SHA-512 hex
     const candidateHash = crypto.createHash("sha512").update(password, "utf8").digest("hex");
     if (candidateHash !== user.passwordHash) return res.status(401).json({ error: "Invalid credentials" });
 

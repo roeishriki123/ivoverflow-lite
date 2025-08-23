@@ -18,13 +18,13 @@ export async function createAnswer(req, res) {
       return res.status(400).json({ message: "Invalid questionId" });
     }
 
-    // נוודא שהשאלה קיימת
+    // checking if the question exist
     const question = await Question.findById(questionId).lean();
     if (!question) {
       return res.status(404).json({ message: "Question not found" });
     }
 
-    // נביא כינוי למשתמש כדי למלא את השדה המוטמע author
+    // getting the user nickname
     const user = await User.findById(req.user.id, "nickname").lean();
     if (!user) {
       return res.status(404).json({ message: "User not found" });
@@ -56,7 +56,7 @@ export async function getAnswersForQuestion(req, res) {
     }
 
     const answers = await Answer.find({ questionId })
-      .sort({ createdAt: 1 }) // מהישנות לחדשות
+      .sort({ createdAt: 1 }) // oldest to newest
       .lean();
 
     return res.json(answers);

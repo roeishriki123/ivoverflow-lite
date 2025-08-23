@@ -3,7 +3,6 @@ import Question from "../models/Question.js";
 
 export async function createQuestion(req, res) {
   try {
-    // נוודא שיש משתמש מזוהה (נובע מ-verifyToken שמכניס req.user.id)
     if (!req.user?.id) {
       return res.status(401).json({ message: "Unauthorized" });
     }
@@ -36,7 +35,7 @@ export async function getQuestions(_req, res) {
   try {
     const list = await Question.find({}, "title body tags authorId createdAt")
       .sort({ createdAt: -1 })
-      .populate("authorId", "nickname fullName email") // ← כדי לקבל פרטי יוצר השאלה
+      .populate("authorId", "nickname fullName email") 
       .lean();
 
     return res.json(list);
