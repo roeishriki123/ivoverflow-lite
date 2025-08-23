@@ -3,12 +3,13 @@ import Question from "../models/Question.js";
 
 export async function createQuestion(req, res) {
   try {
-    if (!req.user?.id) {
-      return res.status(401).json({ message: "Unauthorized" });
-    }
+    if (!req.user?.id) return res.status(401).json({ message: "Unauthorized" });
 
     const { title, body, tags } = req.body || {};
-    if (!title || !body) {
+
+    const titleStr = String(title ?? "").trim();
+    const bodyStr  = String(body  ?? "").trim();
+    if (!titleStr || !bodyStr) {
       return res.status(400).json({ message: "title and body are required" });
     }
 
@@ -17,10 +18,10 @@ export async function createQuestion(req, res) {
       : [];
 
     const q = await Question.create({
-      title: String(title).trim(),
-      body,
+      title: titleStr,
+      body: bodyStr,
       tags: safeTags,
-      authorId: req.user.id, 
+      authorId: req.user.id,
     });
 
     const populated = await q.populate("authorId", "nickname fullName email");
@@ -30,6 +31,7 @@ export async function createQuestion(req, res) {
     return res.status(500).json({ message: "Server error" });
   }
 }
+
 
 export async function getQuestions(_req, res) {
   try {

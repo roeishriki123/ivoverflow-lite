@@ -2,10 +2,16 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchQuestions } from "../slices/questionsSlice";
 import { Link } from "react-router-dom";
+import RequireAuthNotice from "../components/RequireAuthNotice.jsx";
 
 export default function Questions() {
   const dispatch = useDispatch();
   const { list, status, error } = useSelector((s) => s.questions);
+  const token = useSelector((s) => s.auth.token);
+
+  if (!token) {
+    return <RequireAuthNotice action="view all questions" />;
+  }
 
   useEffect(() => {
     if (status === "idle") dispatch(fetchQuestions());

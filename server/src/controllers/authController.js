@@ -5,17 +5,24 @@ import User from "../models/User.js";
 export async function login(req, res) {
   try {
     const { email, password } = req.body || {};
-    if (!email || !password) {
+
+    // ← הוספה: סניטציה + trim
+    const emailStr = String(email ?? "").trim();
+    const passStr  = String(password ?? "").trim();
+
+    // ← עדכון: בדיקה אחרי trim
+    if (!emailStr || !passStr) {
       return res.status(400).json({ message: "email and password are required" });
     }
 
-    const user = await User.findOne({ email }).lean();
+    // ← עדכון: שימוש בערך המסונן
+    const user = await User.findOne({ email: emailStr }).lean();
     if (!user) {
-      // we dont reaveal if the user exist
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    const passwordHash = hashPassword(password);
+    // ← עדכון: שימוש בסיסמה אחרי trim
+    const passwordHash = hashPassword(passStr);
     if (passwordHash !== user.passwordHash) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
@@ -24,7 +31,7 @@ export async function login(req, res) {
     const token = jwt.sign(
       {},
       process.env.JWT_SECRET,
-      { expiresIn, subject: String(user._id) } 
+      { expiresIn, subject: String(user._id) }
     );
 
     return res.json({

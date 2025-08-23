@@ -12,6 +12,12 @@ export default function Login() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    if (!email.trim() || !password.trim()) {
+      alert("Please fill both email and password.");
+      return;
+    }
+  
     try {
       const res = await loginUser(email, password);
       dispatch(setToken(res.data.token)); 
@@ -20,6 +26,7 @@ export default function Login() {
       alert("Login failed!");
     }
   };
+  
 
   return (
     <div>

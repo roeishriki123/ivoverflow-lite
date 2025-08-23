@@ -9,21 +9,21 @@ const router = Router();
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body || {};
-    if (!email || !password) return res.status(400).json({ error: "email & password required" });
+    const emailStr = String(email ?? "").trim();
+    const passStr  = String(password ?? "").trim();
 
-    const user = await User.findOne({ email });
+    if (!emailStr || !passStr) {
+      return res.status(400).json({ error: "email & password required" });
+    }
+
+    const user = await User.findOne({ email: emailStr });
     if (!user) return res.status(401).json({ error: "Invalid credentials" });
 
-    // SHA-512 hex
-    const candidateHash = crypto.createHash("sha512").update(password, "utf8").digest("hex");
+    const candidateHash = crypto.createHash("sha512").update(passStr, "utf8").digest("hex");
     if (candidateHash !== user.passwordHash) return res.status(401).json({ error: "Invalid credentials" });
 
     const token = jwt.sign(
-        {
-            sub: user._id.toString(),
-            email: user.email,
-            nickname: user.nickname,
-          },
+      { sub: user._id.toString(), email: user.email, nickname: user.nickname },
       process.env.JWT_SECRET,
       { expiresIn: process.env.JWT_EXPIRES_IN || "1h" }
     );
@@ -34,5 +34,6 @@ router.post("/login", async (req, res) => {
     res.status(500).json({ error: "Login failed" });
   }
 });
+
 
 export default router;
