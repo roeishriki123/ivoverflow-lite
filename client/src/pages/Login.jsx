@@ -14,7 +14,7 @@ export default function Login() {
     e.preventDefault();
     try {
       const res = await loginUser(email, password);
-      dispatch(setToken(res.data.token)); // שמירה ב־store וגם ב־localStorage
+      dispatch(setToken(res.data.token)); 
       navigate("/questions");
     } catch (err) {
       alert("Login failed!");

@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
-// נשתמש ב־axios ישיר כי לא הוספת פונקציות ב־api.js עבור תשובות
 const BASE = "http://localhost:4000/api";
 const authHeader = () => ({ Authorization: `Bearer ${localStorage.getItem("token")}` });
 
