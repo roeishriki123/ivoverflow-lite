@@ -6,15 +6,18 @@ import { hashPassword } from "./utils/crypto.js";
 dotenv.config();
 const MONGO_URI = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/ivoverflow";
 
+// simple script to clear users and add demo accounts
 async function run() {
   console.log(" Starting seed...");
   try {
     const conn = await mongoose.connect(MONGO_URI);
     console.log(" Connected to", conn.connection.host, "db:", conn.connection.name);
 
+    // remove all existing users
     const del = await User.deleteMany({});
     console.log(` Cleared users (${del.deletedCount})`);
 
+    // insert demo users with SHA512 password hashes
     const users = [
       { nickname: "roy",   fullName: "Roy Shriki",   email: "roy@example.com",   passwordHash: hashPassword("123456") },
       { nickname: "netta", fullName: "Netta Example", email: "netta@example.com", passwordHash: hashPassword("password") },

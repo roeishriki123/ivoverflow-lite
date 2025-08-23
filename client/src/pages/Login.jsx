@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToken } from "../slices/authSlice";
 
+// login form: authenticates user and saves token
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -20,8 +21,8 @@ export default function Login() {
   
     try {
       const res = await loginUser(email, password);
-      dispatch(setToken(res.data.token)); 
-      navigate("/questions");
+      dispatch(setToken(res.data.token));  // save token in store + localStorage
+      navigate("/questions");     // redirect after login
     } catch (err) {
       alert("Login failed!");
     }

@@ -5,6 +5,8 @@ import { fetchQuestions } from "../slices/questionsSlice";
 import { fetchAnswers, addAnswer } from "../slices/answersSlice";
 import RequireAuthNotice from "../components/RequireAuthNotice.jsx";
 
+
+// question detail page: shows one question and its answers
 export default function QuestionDetail() {
   const { id } = useParams();
   const dispatch = useDispatch();

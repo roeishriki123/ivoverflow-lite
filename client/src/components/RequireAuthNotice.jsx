@@ -1,5 +1,6 @@
 import { Link, useLocation } from "react-router-dom";
 
+// Shows a message when user tries to do something that requires login
 export default function RequireAuthNotice({ action = "view this page" }) {
   const location = useLocation();
   return (

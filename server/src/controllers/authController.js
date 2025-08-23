@@ -2,26 +2,24 @@ import jwt from "jsonwebtoken";
 import { hashPassword } from "../utils/crypto.js";
 import User from "../models/User.js";
 
+
+// handle login: check credentials and return JWT
 export async function login(req, res) {
   try {
     const { email, password } = req.body || {};
 
-    // ← הוספה: סניטציה + trim
     const emailStr = String(email ?? "").trim();
     const passStr  = String(password ?? "").trim();
 
-    // ← עדכון: בדיקה אחרי trim
     if (!emailStr || !passStr) {
       return res.status(400).json({ message: "email and password are required" });
     }
 
-    // ← עדכון: שימוש בערך המסונן
     const user = await User.findOne({ email: emailStr }).lean();
     if (!user) {
       return res.status(401).json({ message: "Invalid credentials" });
     }
 
-    // ← עדכון: שימוש בסיסמה אחרי trim
     const passwordHash = hashPassword(passStr);
     if (passwordHash !== user.passwordHash) {
       return res.status(401).json({ message: "Invalid credentials" });

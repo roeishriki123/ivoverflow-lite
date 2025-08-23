@@ -4,6 +4,7 @@ import { fetchQuestions } from "../slices/questionsSlice";
 import { Link } from "react-router-dom";
 import RequireAuthNotice from "../components/RequireAuthNotice.jsx";
 
+// page that lists all questions (requires login)
 export default function Questions() {
   const dispatch = useDispatch();
   const { list, status, error } = useSelector((s) => s.questions);

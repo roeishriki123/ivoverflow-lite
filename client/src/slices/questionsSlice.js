@@ -1,11 +1,13 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getQuestions, createQuestion } from "../lib/api";
 
+// fetch all questions
 export const fetchQuestions = createAsyncThunk("questions/fetch", async () => {
   const res = await getQuestions();
   return res.data;
 });
 
+// add a new question
 export const addQuestion = createAsyncThunk(
   "questions/add",
   async ({ title, body, tags }) => {
@@ -17,6 +19,7 @@ export const addQuestion = createAsyncThunk(
   }
 );
 
+// Redux slice for questions (list, loading status, error)
 const questionsSlice = createSlice({
   name: "questions",
   initialState: { list: [], status: "idle", error: null },

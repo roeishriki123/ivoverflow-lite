@@ -15,6 +15,7 @@ export const fetchAnswers = createAsyncThunk(
   }
 );
 
+// fetch all answers for a question
 export const addAnswer = createAsyncThunk(
   "answers/add",
   async ({ questionId, body }) => {
@@ -27,7 +28,7 @@ export const addAnswer = createAsyncThunk(
   }
 );
 
-
+// Redux slice: answers stored as { [questionId]: Answer[] }
 const answersSlice = createSlice({
   name: "answers",
   initialState: {},

@@ -1,9 +1,10 @@
-// controllers/answerController.js
 import mongoose from "mongoose";
 import Answer from "../models/Answer.js";
 import Question from "../models/Question.js";
 import User from "../models/User.js";
 
+
+// create a new answer for a question
 export async function createAnswer(req, res) {
   try {
     if (!req.user?.id) {
@@ -48,6 +49,7 @@ export async function createAnswer(req, res) {
   }
 }
 
+// get all answers for a question
 export async function getAnswersForQuestion(req, res) {
   try {
     const { questionId } = req.params;

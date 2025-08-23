@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Answer model: belongs to a question and has an author
 const AnswerSchema = new mongoose.Schema(
   {
     body: { type: String, required: true, trim: true },

@@ -5,7 +5,7 @@ import User from "../models/User.js";
 
 const router = Router();
 
-// POST /api/login
+// login route: checks email/password and returns JWT
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body || {};

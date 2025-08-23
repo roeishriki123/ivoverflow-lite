@@ -1,5 +1,6 @@
 import User from "../models/User.js";
 
+// return info of the currently logged-in user
 export async function getUserInfo(req, res) {
   try {
     const user = await User.findById(req.user.id).lean();

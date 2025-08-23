@@ -1,6 +1,6 @@
-// controllers/questionController.js
 import Question from "../models/Question.js";
 
+// create a new question
 export async function createQuestion(req, res) {
   try {
     if (!req.user?.id) return res.status(401).json({ message: "Unauthorized" });
@@ -32,7 +32,7 @@ export async function createQuestion(req, res) {
   }
 }
 
-
+// get list of all questions
 export async function getQuestions(_req, res) {
   try {
     const list = await Question.find({}, "title body tags authorId createdAt")

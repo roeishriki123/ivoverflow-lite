@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// User model: basic info + password hash
 const userSchema = new mongoose.Schema({
   nickname: { type: String, required: true },
   fullName: { type: String, required: true },

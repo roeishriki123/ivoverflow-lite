@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+// Question model: title, body, tags, and author
 const QuestionSchema = new mongoose.Schema(
   {
     title: { type: String, required: true, trim: true },

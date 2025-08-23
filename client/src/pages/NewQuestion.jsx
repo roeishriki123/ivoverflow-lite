@@ -4,6 +4,8 @@ import { addQuestion } from "../slices/questionsSlice";
 import { useNavigate } from "react-router-dom";
 import RequireAuthNotice from "../components/RequireAuthNotice.jsx";
 
+
+// form for creating a new question (requires login)
 export default function NewQuestion() {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");

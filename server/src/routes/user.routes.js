@@ -3,7 +3,7 @@ import { verifyToken } from "../middleware/auth.js";
 
 const router = Router();
 
-// GET /api/userInfo (JWT verified)
+// get info about the current logged-in user (requires JWT)
 router.get("/userInfo", verifyToken, async (req, res) => {
   try {
     res.json({

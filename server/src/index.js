@@ -22,32 +22,32 @@ const app = express();
 app.use(express.json());
 
 
-
+// allow CORS from React dev server
 app.use(cors({
   origin: "http://localhost:5173",
   methods: ["GET","POST","PUT","PATCH","DELETE","OPTIONS"],
   allowedHeaders: ["Content-Type","Authorization"]
 }));
 
+// security headers
 app.use(helmet());
 
-// public :
+// public routes (no auth)
 app.get("/", (req, res) => res.send("IVOverflow Lite API is running 🚀"));
 app.get("/api/health", (req, res) => res.json({ ok: true, uptime: process.uptime() }));
 app.use("/api", authRoutes); 
 
-// JWT
+// everything after this requires JWT
 app.use("/api", verifyToken);
 
-// what comes after is JWT verified 
-
+// protected routes
 app.use("/api", userRoutes); 
 app.use("/api", questionRoutes);
 app.use("/api", answersRouter);
 
 
 
-// Connecting to the database and running the server
+// connect to DB and start server
 const PORT = process.env.PORT || 4000;
 const MONGO_URI =
   process.env.MONGO_URI || "mongodb://127.0.0.1:27017/ivoverflow";
