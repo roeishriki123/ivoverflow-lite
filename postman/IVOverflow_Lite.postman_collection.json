@@ -1,0 +1,338 @@
+{
+    "info": {
+      "name": "IVOverflow Lite",
+      "_postman_id": "277ea9c2-7e95-43db-9706-f61e38a9c018",
+      "description": "Postman collection with positive + negative tests (no token, empty fields).",
+      "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+      {
+        "name": "Auth",
+        "item": [
+          {
+            "name": "Login (valid)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/login",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "login"
+                ]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"alice123\"\n}"
+              }
+            }
+          },
+          {
+            "name": "Login (wrong password)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/login",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "login"
+                ]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"email\": \"alice@example.com\",\n  \"password\": \"wrong\"\n}"
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Questions",
+        "item": [
+          {
+            "name": "Create Question (valid)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/createQuestion",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "createQuestion"
+                ]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"First Q\",\n  \"body\": \"How to use IVOverflow?\",\n  \"tags\": [\n    \"intro\",\n    \"help\"\n  ]\n}"
+              }
+            }
+          },
+          {
+            "name": "Create Question (no token)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/createQuestion",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "createQuestion"
+                ]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"Q?\",\n  \"body\": \"Body\"\n}"
+              }
+            }
+          },
+          {
+            "name": "Create Question (empty fields)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/createQuestion",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "createQuestion"
+                ]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"title\": \"\",\n  \"body\": \"\"\n}"
+              }
+            }
+          },
+          {
+            "name": "Get Questions",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/getQuestions",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "getQuestions"
+                ]
+              }
+            }
+          }
+        ]
+      },
+      {
+        "name": "Answers",
+        "item": [
+          {
+            "name": "Submit Answer (valid)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/answer",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "answer"
+                ]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"questionId\": \"{{questionId}}\",\n  \"body\": \"This is an answer.\"\n}"
+              }
+            }
+          },
+          {
+            "name": "Submit Answer (no token)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/answer",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "answer"
+                ]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"questionId\": \"{{questionId}}\",\n  \"body\": \"Test\"\n}"
+              }
+            }
+          },
+          {
+            "name": "Submit Answer (empty body)",
+            "request": {
+              "method": "POST",
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                },
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/answer",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "answer"
+                ]
+              },
+              "body": {
+                "mode": "raw",
+                "raw": "{\n  \"questionId\": \"{{questionId}}\",\n  \"body\": \"\"\n}"
+              }
+            }
+          },
+          {
+            "name": "Get Question Answers (valid)",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/getQuestionAnswers?questionId={{questionId}}",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "getQuestionAnswers"
+                ],
+                "query": [
+                  {
+                    "key": "questionId",
+                    "value": "{{questionId}}"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Get Question Answers (no token)",
+            "request": {
+              "method": "GET",
+              "header": [],
+              "url": {
+                "raw": "{{baseUrl}}/getQuestionAnswers?questionId={{questionId}}",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "getQuestionAnswers"
+                ],
+                "query": [
+                  {
+                    "key": "questionId",
+                    "value": "{{questionId}}"
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "name": "Get Question Answers (invalid id)",
+            "request": {
+              "method": "GET",
+              "header": [
+                {
+                  "key": "Authorization",
+                  "value": "Bearer {{token}}"
+                }
+              ],
+              "url": {
+                "raw": "{{baseUrl}}/getQuestionAnswers?questionId=123",
+                "host": [
+                  "{{baseUrl}}"
+                ],
+                "path": [
+                  "getQuestionAnswers"
+                ],
+                "query": [
+                  {
+                    "key": "questionId",
+                    "value": "123"
+                  }
+                ]
+              }
+            }
+          }
+        ]
+      }
+    ]
+  }
