@@ -1,13 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getQuestions, createQuestion } from "../lib/api";
 
-// מביא את כל השאלות
 export const fetchQuestions = createAsyncThunk("questions/fetch", async () => {
   const res = await getQuestions();
   return res.data;
 });
 
-// יוצר שאלה חדשה ומחזיר אותה
 export const addQuestion = createAsyncThunk(
   "questions/add",
   async ({ title, body, tags }) => {
@@ -38,7 +36,6 @@ const questionsSlice = createSlice({
         state.error = action.error.message || "Failed to load questions";
       })
       .addCase(addQuestion.fulfilled, (state, action) => {
-        // מוסיף לראש הרשימה כדי לראות מיד
         state.list.unshift(action.payload);
       });
   },

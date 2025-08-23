@@ -4,26 +4,30 @@ import axios from "axios";
 const BASE = "http://localhost:4000/api";
 const authHeader = () => ({ Authorization: `Bearer ${localStorage.getItem("token")}` });
 
-// מביא את כל התשובות לשאלה
 export const fetchAnswers = createAsyncThunk(
   "answers/fetch",
   async (questionId) => {
-    const res = await axios.get(`${BASE}/answers/${questionId}`, { headers: authHeader() });
+    const res = await axios.get(`${BASE}/getQuestionAnswers`, {
+      params: { questionId },
+      headers: authHeader(),
+    });
     return { questionId, answers: res.data };
   }
 );
 
-// מוסיף תשובה ואז מרענן את הרשימה
 export const addAnswer = createAsyncThunk(
   "answers/add",
   async ({ questionId, body }) => {
     await axios.post(`${BASE}/answer`, { questionId, body }, { headers: authHeader() });
-    const res = await axios.get(`${BASE}/answers/${questionId}`, { headers: authHeader() });
+    const res = await axios.get(`${BASE}/getQuestionAnswers`, {
+      params: { questionId },
+      headers: authHeader(),
+    });
     return { questionId, answers: res.data };
   }
 );
 
-// state בצורת map: { [questionId]: Answer[] }
+
 const answersSlice = createSlice({
   name: "answers",
   initialState: {},

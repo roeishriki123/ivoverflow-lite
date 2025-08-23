@@ -7,7 +7,12 @@ const router = Router();
 // POST /api/answer   
 router.post("/answer", createAnswer);
 
-// GET  /api/answers/:questionId 
-router.get("/answers/:questionId", getAnswersForQuestion);
+
+//  GET /api/getQuestionAnswers?questionId=...
+
+router.get("/getQuestionAnswers", (req, res, next) => {
+    req.params.questionId = req.query.questionId;
+    return getAnswersForQuestion(req, res, next);
+  });
 
 export default router;
